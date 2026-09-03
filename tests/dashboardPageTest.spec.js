@@ -27,7 +27,7 @@ test('Add a product to cart', async () => {
     await dashboardPage.viewProductDetails(data.viewProductName)
 
     await dashboardPage.verifyProductDetailsPage(data.viewProductName)
-    await expect(dashboardPage.productDetailsName?.trim()).toBe(data.viewProductName)
+    await expect(dashboardPage.productDetailsName).toHaveText(data.viewProductName)
 
     await dashboardPage.goToCart()
 
@@ -35,7 +35,7 @@ test('Add a product to cart', async () => {
 
     await expect(dashboardPage.myCart).toHaveText('My Cart')
 
-    console.log(`${await dashboardPage.orderId.innerText()}`)
+    console.log(`${await dashboardPage.orderId.first().innerText()}`)
     
-    console.log(`${await dashboardPage.addedProductPrice.innerText()}`)
+    console.log(`${await dashboardPage.addedProductPrice.first().innerText()}`)
 })
