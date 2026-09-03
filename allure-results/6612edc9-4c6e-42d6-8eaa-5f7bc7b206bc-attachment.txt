@@ -1,0 +1,1 @@
+locator('label.m-2.blink_me')

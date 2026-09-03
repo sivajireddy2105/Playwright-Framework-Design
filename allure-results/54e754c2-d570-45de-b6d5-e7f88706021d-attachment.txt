@@ -1,0 +1,4 @@
+Checking product: ADIDAS ORIGINAL
+Checking product: ZARA COAT 3
+Found: ZARA COAT 3
+Success: locator('#toast-container')

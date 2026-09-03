@@ -1,0 +1,121 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: dashboardPageTest.spec.js >> Add a product to cart
+- Location: tests\dashboardPageTest.spec.js:9:5
+
+# Error details
+
+```
+Error: expect(locator).toHaveText(expected) failed
+
+Locator:  locator('div.toast-bottom-right.toast-container')
+Expected: " Product Added To Cart "
+Received: ""
+Timeout:  5000ms
+
+Call log:
+  - Expect "toHaveText" with timeout 5000ms
+  - waiting for locator('div.toast-bottom-right.toast-container')
+    6 × locator resolved to <div id="toast-container" class="toast-bottom-right toast-container">…</div>
+      - unexpected value " Incorrect email or password. "
+    7 × locator resolved to <div id="toast-container" class="toast-bottom-right toast-container"></div>
+      - unexpected value ""
+
+```
+
+```yaml
+- banner:
+  - text: Ecom
+  - link " dummywebsite@rahulshettyacademy.com":
+    - /url: emailto:dummywebsite@rahulshettyacademy.com
+  - link "":
+    - /url: "#"
+  - link "":
+    - /url: "#"
+  - link "":
+    - /url: "#"
+  - link "":
+    - /url: "#"
+- heading "We Make Your Shopping Simple" [level=3]
+- heading "Practice Website for Rahul Shetty Academy Students" [level=1]:
+  - text: Practice Website for
+  - emphasis: Rahul Shetty Academy
+  - text: Students
+- link "Register":
+  - /url: "#/auth/register"
+- paragraph: Register to sign in with your personal account
+- heading "Log in" [level=1]
+- text: Email
+- textbox "email@example.com": iam.reddy0508@gmail.com
+- text: Password
+- textbox "enter your passsword": shivaji2105
+- button "Login"
+- link "Forgot password?":
+  - /url: "#/auth/password-new"
+- paragraph: Don't have an account? Register here
+- heading "Why People Choose Us?" [level=1]
+- text: 
+- heading "3546540" [level=1]
+- paragraph: Successfull Orders
+- text: 
+- heading "37653" [level=1]
+- paragraph: Customers
+- text: 
+- heading "3243" [level=1]
+- paragraph: Sellers
+- text: 
+- heading "4500+" [level=1]
+- paragraph: Daily Orders
+- text: 
+- heading "500+" [level=1]
+- paragraph: Daily New Customer Joining
+```
+
+```
+Error: locator.click: Test ended.
+Call log:
+  - waiting for locator('//button[@routerlink="/dashboard/cart"]')
+
+```
+
+# Test source
+
+```ts
+  1  | export class DashboardPage {
+  2  |     constructor(page) {
+  3  |         this.page = page
+  4  |         this.productsList = page.locator('div.card-body')
+  5  |         this.addToCart = page.locator('button.btn.w-10.rounded')
+  6  |         this.addedMessage = page.locator('div.toast-bottom-right.toast-container')
+  7  |         this.cart = page.locator('//button[@routerlink="/dashboard/cart"]')
+  8  |         this.myCart = page.locator('//h1[normalize-space()="My Cart"]')
+  9  |     }
+  10 | 
+  11 |     async addProductToCart(productName) {
+  12 |         const count = await this.productsList.count()
+  13 | 
+  14 |         for (let i = 0; i < count; i++) {
+  15 |             const product = await this.productsList.nth(i)
+  16 |             const productText = await product.innerText()
+  17 | 
+  18 |             if (productText?.trim().includes(productName)) {
+  19 |                 await product.nth(i).addToCart.click()
+  20 |                 break
+  21 |             }
+  22 |         }
+  23 |         await this.addedMessage.waitFor({state: 'visible'})
+  24 |     }
+  25 | 
+  26 |     async goToCart(){
+> 27 |         await this.cart.click()
+     |                         ^ Error: locator.click: Test ended.
+  28 |         await this.myCart.waitFor()
+  29 |     }
+  30 | }
+```

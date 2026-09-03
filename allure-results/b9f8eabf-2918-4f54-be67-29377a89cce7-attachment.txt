@@ -1,0 +1,6 @@
+Total products: 3
+Checking product: ADIDAS ORIGINAL
+Checking product: ZARA COAT 3
+ZARA COAT 3 found
+ZARA COAT 3 price: $ 11500
+Success: Product Added To Cart
